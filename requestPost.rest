@@ -1,0 +1,58 @@
+
+ 
+
+### ADMIN & USER-----------------------------------------------------
+
+### Both can add a requestPost ##
+
+POST http://localhost:8080/api/v1/requestPost
+Content-Type: application/json
+authorization: Bearer #
+
+
+{
+    "title": "" ,
+    "story": "" , 
+    "photo": "" , 
+    "bloodType": "" , 
+    "amount": "" ,
+    "location": "" , 
+    "phoneNumber": "" , 
+    "closingData": "" , 
+    "hospital": "" ,
+    "status": "" ,
+    "referenceNumber": "" ,
+}
+
+
+### Get list of requestPosts of either the admin or the user
+
+GET http://localhost:8080/api/v1/requestPost
+Content-Type: application/json
+authorization: Bearer #
+
+
+### View their requestPost individually ##
+
+GET http://localhost:8080/api/v1/requestPost/#
+Content-Type: application/json
+authorization: Bearer #
+
+
+### Both can edit their requestPost
+
+PUT http://localhost:8080/api/v1/requestPost/#
+Content-Type: application/json
+authorization: Bearer #
+
+{
+    "status": "Complete"
+}
+
+
+### Both can delete one of their listed requestPosts
+
+DELETE http://localhost:8080/api/v1/requestPost/#
+Content-Type: application/json
+authorization: Bearer #
+

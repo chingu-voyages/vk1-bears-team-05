@@ -9,11 +9,11 @@ const profileController = {};
 // Add profile
 profileController.add = async (req, res, next) => {
   //
-  const { user,photo,userAbout,bloodType,location,lastTimeDonated} = req.body;
+  const { photo, userAbout, bloodType, location, lastTimeDonated } = req.body;
 
   try {
     const profile = await profileModel.create({
-      user,
+      userId: req.user.userId,
       photo,
       userAbout,
       bloodType,

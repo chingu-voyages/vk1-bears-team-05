@@ -5,7 +5,7 @@ http://localhost:8080/api/v1
 
 ### ADMIN -----------------------------------------------------------
 
-### Register as an admin ###
+### Register as an admin or user  ###
 
 POST http://localhost:8080/api/v1/auth/register
 Content-Type: application/json
@@ -16,8 +16,11 @@ Content-Type: application/json
     "firstName": "Christopher" ,
     "lastName": "Reid",
     "city": "Taguig" ,
-    "mobileNumber": "09275410017"
+    "mobileNumber": "09275410017",
+    "role": "admin"
+
 }
+
 
 
 ### Activate account ###
@@ -25,7 +28,7 @@ Content-Type: application/json
 http://localhost:8080/api/v1/auth/activate/GUVjZubCVjZehLmFcS8
 
 
-### Login admin account ###
+### Login admin or user  account ###
 
 POST http://localhost:8080/api/v1/auth/login
 Content-Type: application/json
@@ -87,10 +90,12 @@ POST http://localhost:8080/api/v1/auth/register
 Content-Type: application/json
 
 {
-    "name": "Christopher Reid   ",
-    "username": "chrissybels",
-    "email": "istian@gmail.com",
-    "password": "12345"
+    "email": "istianreid@gmail.com",
+    "password": "codecode",
+    "firstName": "Christopher" ,
+    "lastName": "Reid",
+    "city": "Taguig" ,
+    "mobileNumber": "09275410017",
 }
 
 

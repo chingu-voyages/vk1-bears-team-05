@@ -9,34 +9,34 @@ const profileRoutes = express.Router();
 
 // add a profile
 profileRoutes.post(
-  "/profile",
+  "/",
   [authenticateToken],
   asyncWrapper(profileController.add)
 );
 
 // view all 
 profileRoutes.get(
-  "/profile", [authenticateToken], 
+  "/", [authenticateToken], 
   asyncWrapper(profileController.findAll));
 
 
 // view one profile
 profileRoutes.get(
-  "/profile:profileId",
+  "/:profileId",
   [authenticateToken],
   asyncWrapper(profileController.findOne)
 );
 
 // update a profile
 profileRoutes.put(
-  "/profile:profileId",
+  "/:profileId",
   [authenticateToken],
   asyncWrapper(profileController.update)
 );
 
 // delete a profile
 profileRoutes.delete(
-  "/profile:profileId",
+  "/:profileId",
   [authenticateToken,isAdmin],
   asyncWrapper(profileController.delete)
 );

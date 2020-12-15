@@ -83,6 +83,7 @@ userController.register = async (req, res, next) => {
                   lastName: req.body.lastName,
                   city: req.body.city,
                   mobileNumber: req.body.mobileNumber,
+                  role: req.body.role,
                   activation_key: activation,
                 });
 
@@ -145,6 +146,8 @@ userController.login = async (req, res, next) => {
               mobileNumber: user[0].mobileNumber,
               firstName: user[0].firstName,
               lastName: user[0].lastName,
+              city: user[0].city,
+              role: user[0].role,
             },
             appConfig.jwt_key,
             {
