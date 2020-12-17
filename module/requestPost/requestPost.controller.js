@@ -37,6 +37,24 @@ requestPostController.add = async (req, res, next) => {
   }
 };
 
+  //requestPost upload
+  requestPostController.upload = async (req, res, next) => {
+
+    try {
+      let requestPost = await requestPostModel.findById(req.params.requestPostId);
+      requestPost = await requestPostModel.update({
+        userId: req.user.userId,
+        photo: req.file.filename
+      });
+      
+      return res.json(requestPost);
+    } catch (error) {
+      return res
+        .status(httpStatus.INTERNAL_SERVER_ERROR)
+        .json({ error: error.toString() });
+    }
+  }
+
 // Get All requestPost
 requestPostController.findAll = async (req, res) => {
   try {

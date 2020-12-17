@@ -78,7 +78,7 @@ const upload = multer({
 })
 
 profileRoutes.post(
-  "/upload:profileId",
+  "/upload/:profileId",
   [authenticateToken],
   upload.single('image'),
   asyncWrapper(profileController.upload)

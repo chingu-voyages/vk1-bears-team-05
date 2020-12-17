@@ -6,15 +6,8 @@ import connectMongo from "./config/mongoconnect";
 import cors from "cors"  
 
 //////////////////
-import Grid from 'gridfs-stream'
-import mongoose from 'mongoose'
-import fs from 'fs'
-import multer from 'multer'
-import profileModel from './module/profile/profile.model'
 
-import uploadRoutes from './routes/uploadRoutes.js'
 import path from 'path'
-
 
 
 const app = express();
@@ -34,8 +27,6 @@ connectMongo();
 
 //routes
 app.use("/", mainRouter);
-app.use('/api/upload', uploadRoutes)
-
 
 const __dirname = path.resolve()
 app.use('/uploads', express.static(path.join(__dirname, './uploads')))

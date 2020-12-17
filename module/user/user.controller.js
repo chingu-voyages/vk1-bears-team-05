@@ -7,6 +7,10 @@ import appConfig from "../../config/env";
 import crypto from "crypto-random-string";
 import nodemailer from "nodemailer";
 
+import mustache from "mustache"
+import path from 'path'
+import fs from 'fs'
+
 const userController = {};
 
 // Create User
@@ -26,7 +30,9 @@ userController.register = async (req, res, next) => {
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
               error: err,
             });
+            
           } else {
+            
             const activation = crypto({ length: 16, type: "alphanumeric" });
 
             const transporter = nodemailer.createTransport({
@@ -40,6 +46,7 @@ userController.register = async (req, res, next) => {
                 rejectUnauthorized: false,
               },
             });
+            console.log("test")
 
             const filePath = path.join(__dirname, "activationemail.html");
             var content = await fs.readFileSync(filePath, "utf-8");

@@ -9,19 +9,6 @@ import multer from 'multer'
 
 const profileController = {};
 
-
-
-//upload
-profileController.upload = async (req, res, next) => {
-  console.log(req);
-  const userId = req.user.userId;
-
-  // findandupdate profile base sa id
-  res.send("end");
-}
-
-
-
 // Add profile
 profileController.add = async (req, res, next) => {
   //
@@ -46,6 +33,24 @@ profileController.add = async (req, res, next) => {
       .json({ error: error.toString() });
   }
 };
+
+  //upload
+profileController.upload = async (req, res, next) => {
+
+    try {
+      let profile = await profileModel.findById(req.params.profileId);
+      profile = await profileModel.update({
+        userId: req.user.userId,
+        photo: req.file.filename
+      });
+      
+      return res.json(profile);
+    } catch (error) {
+      return res
+        .status(httpStatus.INTERNAL_SERVER_ERROR)
+        .json({ error: error.toString() });
+    }
+  }
 
 
 // Get All profile

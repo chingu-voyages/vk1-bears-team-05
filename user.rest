@@ -11,20 +11,20 @@ POST http://localhost:8080/api/v1/auth/register
 Content-Type: application/json
 
 {
-    "email": "test@gmail.com",
-    "password": "test",
-    "firstName": "Christopher" ,
-    "lastName": "Reid",
-    "city": "Taguig" ,
-    "mobileNumber": "0000007",
-    "role": "admin"
+    "email": "",
+    "password": "",
+    "firstName": "" ,
+    "lastName": "",
+    "city": "" ,
+    "mobileNumber": "" ,
+    "role": ""
 }
 
 
 
 ### Activate account ###
 
-http://localhost:8080/api/v1/auth/activate/JsWcFcbdSjEklCAo
+http://localhost:8080/api/v1/auth/activate/#
 
 
 ### Login admin or user  account ###
@@ -89,12 +89,12 @@ POST http://localhost:8080/api/v1/auth/register
 Content-Type: application/json
 
 {
-    "email": "istianreid@gmail.com",
-    "password": "codecode",
-    "firstName": "Christopher" ,
-    "lastName": "Reid",
-    "city": "Taguig" ,
-    "mobileNumber": "09275410017",
+    "email": "",
+    "password": "",
+    "firstName": "" ,
+    "lastName": "",
+    "city": "" ,
+    "mobileNumber": "",
 }
 
 
@@ -109,8 +109,8 @@ POST http://localhost:8080/api/v1/auth/login
 Content-Type: application/json
 
 {
-    "email": "istian@gmail.com",
-    "password": "12345"
+    "email": "",
+    "password": ""
 }
 
 

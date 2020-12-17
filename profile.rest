@@ -7,11 +7,10 @@
 
 POST http://localhost:8080/api/v1/profile
 Content-Type: application/json
-authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcklkIjoiNWZkYTFjY2I1NjQ2YWMzMDFjNGUzNzY2IiwibW9iaWxlTnVtYmVyIjoiMDAwMDAwNyIsImZpcnN0TmFtZSI6IkNocmlzdG9waGVyIiwibGFzdE5hbWUiOiJSZWlkIiwiY2l0eSI6IlRhZ3VpZyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTYwODEyOTgxMiwiZXhwIjoxNjA4NDg5ODEyfQ.elp48EpIGj0FJZm5PXKvMlKIffbt7_TwegXIOSiGZ2M
+authorization: Bearer #
 
 
 {
-    "photo": "",
     "userAbout": "",
     "bloodType": "",
     "location": "",
@@ -23,28 +22,28 @@ authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ
 
 GET http://localhost:8080/api/v1/profile
 Content-Type: application/json
-authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcklkIjoiNWZkYTMwYzMyZGI1MGQxZDM4MjEyMGJmIiwibW9iaWxlTnVtYmVyIjoiMDAwMDAwNyIsImZpcnN0TmFtZSI6IkNocmlzdG9waGVyIiwibGFzdE5hbWUiOiJSZWlkIiwiY2l0eSI6IlRhZ3VpZyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTYwODEzNDkxMSwiZXhwIjoxNjA4NDk0OTExfQ.AQ2lk5IizKposEuvPWvWfEj2joQXMG0DcGMbSZMBdZ4
+authorization: Bearer #
 
 
 ### View their profile individually ##
 
 GET http://localhost:8080/api/v1/profile/5fda30c42db50d1d382120c0
 Content-Type: application/json
-authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcklkIjoiNWZkYTMwYzMyZGI1MGQxZDM4MjEyMGJmIiwibW9iaWxlTnVtYmVyIjoiMDAwMDAwNyIsImZpcnN0TmFtZSI6IkNocmlzdG9waGVyIiwibGFzdE5hbWUiOiJSZWlkIiwiY2l0eSI6IlRhZ3VpZyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTYwODEzNDkxMSwiZXhwIjoxNjA4NDk0OTExfQ.AQ2lk5IizKposEuvPWvWfEj2joQXMG0DcGMbSZMBdZ4
+authorization: Bearer #
 
 
 ### Both can edit their profile
 
 PUT http://localhost:8080/api/v1/profile/5fda30c42db50d1d382120c0
 Content-Type: application/json
-authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcklkIjoiNWZkYTMwYzMyZGI1MGQxZDM4MjEyMGJmIiwibW9iaWxlTnVtYmVyIjoiMDAwMDAwNyIsImZpcnN0TmFtZSI6IkNocmlzdG9waGVyIiwibGFzdE5hbWUiOiJSZWlkIiwiY2l0eSI6IlRhZ3VpZyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTYwODEzNDkxMSwiZXhwIjoxNjA4NDk0OTExfQ.AQ2lk5IizKposEuvPWvWfEj2joQXMG0DcGMbSZMBdZ4
+authorization: Bearer #
 
 {
-    "photo": "test1",
-    "userAbout": "testtest",
-    "bloodType": "test",
-    "location": "test",
-    "lastTimeDonated": "12/16/2020"
+    "photo": "",
+    "userAbout": "",
+    "bloodType": "",
+    "location": "",
+    "lastTimeDonated": ""
 }
 
 ### Both can delete one of their listed profiles

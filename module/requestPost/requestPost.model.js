@@ -13,7 +13,7 @@ var requestPostSchema = new schema({
   },
   photo: {
     type: String,
-    required: true
+    required: false
   },
   bloodType: {
     type: String,
