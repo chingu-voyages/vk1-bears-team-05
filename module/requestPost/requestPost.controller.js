@@ -6,8 +6,6 @@ import appConfig from "../../config/env";
 
 const requestPostController = {};
 
-  
-
 // Add requestPost
 requestPostController.add = async (req, res, next) => {
   //

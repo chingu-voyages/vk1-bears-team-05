@@ -4,8 +4,23 @@ import { profileModel } from "./profile.model";
 import httpStatus from "../../utils/httpStatus";
 import appConfig from "../../config/env";
 
+import path from 'path'
+import multer from 'multer'
 
 const profileController = {};
+
+
+
+//upload
+profileController.upload = async (req, res, next) => {
+  console.log(req);
+  const userId = req.user.userId;
+
+  // findandupdate profile base sa id
+  res.send("end");
+}
+
+
 
 // Add profile
 profileController.add = async (req, res, next) => {
