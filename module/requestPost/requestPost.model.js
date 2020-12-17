@@ -3,11 +3,6 @@ import mongoose from "mongoose";
 const schema = mongoose.Schema;
 
 var requestPostSchema = new schema({
-  profileId: {
-    type: schema.Types.ObjectId,
-    required: true,
-    ref: 'profile'
-  },
   title: {
     type: String,
     required: true
@@ -51,6 +46,11 @@ var requestPostSchema = new schema({
   referenceNumber: {
     type: String,
     required: true
+  },
+  userId: {
+    type: schema.Types.ObjectId,
+    required: true,
+    ref: 'user'
   }
 });
 

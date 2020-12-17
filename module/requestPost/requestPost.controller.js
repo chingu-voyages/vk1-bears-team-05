@@ -6,14 +6,16 @@ import appConfig from "../../config/env";
 
 const requestPostController = {};
 
+  
+
 // Add requestPost
 requestPostController.add = async (req, res, next) => {
   //
-  const {title, story, photo, bloodType, amount, location, phoneNumber, closingData, hospital, status, referenceNumber} = req.body;
+  const {title, story, photo, bloodType, amount, location, phoneNumber, closingDate, hospital, status, referenceNumber} = req.body;
 
   try {
     const requestPost = await requestPostModel.create({
-      profileId: req.profile.profileId, 
+      userId: req.user.userId,
       title, 
       story, 
       photo, 
@@ -21,7 +23,7 @@ requestPostController.add = async (req, res, next) => {
       amount, 
       location, 
       phoneNumber, 
-      closingData, 
+      closingDate, 
       hospital, 
       status, 
       referenceNumber
@@ -41,12 +43,14 @@ requestPostController.add = async (req, res, next) => {
 requestPostController.findAll = async (req, res) => {
   try {
     const user = req.user.userId;
-    let requestPosts = await requestPostModel.find({ userId: user }).populate("userId");
+    let requestPosts = await requestPostModel.find({ userId: user }).populate("user");
     return res.json(requestPosts);
   } catch (error) {
+
     return res
       .status(httpStatus.INTERNAL_SERVER_ERROR)
       .json({ error: error.toString() });
+
   }
 };
 

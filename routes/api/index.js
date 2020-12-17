@@ -4,6 +4,7 @@ import { profileRoutes } from "../../module/profile/profile.routes"
 import { requestPostRoutes } from "../../module/requestPost/requestPost.routes"
 
 
+
 const apiRoutes = express.Router();
 
 apiRoutes.get("/", function(req, res, next) {
@@ -13,5 +14,6 @@ apiRoutes.get("/", function(req, res, next) {
 apiRoutes.use("/auth", userRoutes);
 apiRoutes.use("/profile", profileRoutes);
 apiRoutes.use("/requestPost", requestPostRoutes);
+
 
 export default apiRoutes;

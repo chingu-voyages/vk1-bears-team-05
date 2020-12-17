@@ -4,31 +4,32 @@ const schema = mongoose.Schema;
 
 const profileSchema = new schema({
 
-  userId: {
-    type: schema.Types.ObjectId,
-    required: true,
-    ref: 'user'
-  },
   photo: {
     type: String,
-    required: true
+    required: false
   },
   userAbout: {
     type: String,
-    required: true
+    required: false
   },
   bloodType: {
     type: String,
-    required: true
+    required: false
   },
   location: {
     type: String,
-    required: true
+    required: false
   },
   lastTimeDonated: {
     type: String,
-    required: true
+    required: false
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true , 
+    ref: 'user'
   }
+
 });
 
 

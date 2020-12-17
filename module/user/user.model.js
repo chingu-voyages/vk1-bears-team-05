@@ -39,8 +39,7 @@ const userSchema = new schema({
   is_active: {
     type: Boolean,
     default: false
-  }
-
+  },
 });
 
 const userModel = mongoose.model("user", userSchema);

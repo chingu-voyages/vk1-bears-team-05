@@ -1,13 +1,11 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { userModel } from "./user.model";
+import { profileModel } from "../profile/profile.model"
 import httpStatus from "../../utils/httpStatus";
 import appConfig from "../../config/env";
 import crypto from "crypto-random-string";
 import nodemailer from "nodemailer";
-const mustache = require("mustache");
-const fs = require("fs");
-const path = require("path");
 
 const userController = {};
 
@@ -87,6 +85,17 @@ userController.register = async (req, res, next) => {
                   activation_key: activation,
                 });
 
+                const profile = await profileModel.create({
+                  userId: newUser._id,
+                  photo: "",
+                  userAbout: "", 
+                  bloodType: "", 
+                  location: "", 
+                  lastTimeDonated: ""
+                });
+
+                await profile.save();
+
                 // let { password, __v, ...user } = newUser.toObject();
 
                 if (newUser) {
@@ -149,7 +158,7 @@ userController.login = async (req, res, next) => {
               city: user[0].city,
               role: user[0].role,
             },
-            appConfig.jwt_key,
+              appConfig.jwt_key,
             {
               expiresIn: appConfig.jwt_expiration,
             }

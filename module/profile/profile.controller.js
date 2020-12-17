@@ -4,6 +4,7 @@ import { profileModel } from "./profile.model";
 import httpStatus from "../../utils/httpStatus";
 import appConfig from "../../config/env";
 
+
 const profileController = {};
 
 // Add profile
@@ -30,6 +31,7 @@ profileController.add = async (req, res, next) => {
       .json({ error: error.toString() });
   }
 };
+
 
 // Get All profile
 profileController.findAll = async (req, res) => {
