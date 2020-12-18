@@ -37,23 +37,8 @@ requestPostController.add = async (req, res, next) => {
   }
 };
 
-  //requestPost upload
-  requestPostController.upload = async (req, res, next) => {
 
-    try {
-      let requestPost = await requestPostModel.findById(req.params.requestPostId);
-      requestPost = await requestPostModel.update({
-        userId: req.user.userId,
-        photo: req.file.filename
-      });
-      
-      return res.json(requestPost);
-    } catch (error) {
-      return res
-        .status(httpStatus.INTERNAL_SERVER_ERROR)
-        .json({ error: error.toString() });
-    }
-  }
+
 
 // Get All requestPost
 requestPostController.findAll = async (req, res) => {
@@ -86,6 +71,31 @@ requestPostController.findOne = async (req, res) => {
       .json({ error: error.toString() });
   }
 };
+
+
+//requestPost upload
+requestPostController.upload = async (req, res, next) => {
+
+  try {
+    let requestPost = await requestPostModel.findByIdAndUpdate(req.params.requestPostId , {
+      userId: req.user.userId,
+      photo: req.file.filename
+    });
+    if (!requestPost) {
+      return res
+        .status(httpStatus.BAD_REQUEST)
+        .json({ message: "requestPost not found" });
+    }
+
+    Object.assign(requestPost, req.body);
+    return res.json(requestPost);
+  } catch (error) {
+    return res
+      .status(httpStatus.INTERNAL_SERVER_ERROR)
+      .json({ error: error.toString() });
+    }
+}
+
 
 // Update requestPost By ID
 requestPostController.update = async (req, res) => {

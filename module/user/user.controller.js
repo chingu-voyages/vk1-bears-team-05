@@ -101,6 +101,7 @@ userController.register = async (req, res, next) => {
                   lastTimeDonated: ""
                 });
 
+
                 await profile.save();
 
                 // let { password, __v, ...user } = newUser.toObject();

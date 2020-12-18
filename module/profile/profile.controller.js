@@ -34,30 +34,12 @@ profileController.add = async (req, res, next) => {
   }
 };
 
-  //upload
-profileController.upload = async (req, res, next) => {
-
-    try {
-      let profile = await profileModel.findById(req.params.profileId);
-      profile = await profileModel.update({
-        userId: req.user.userId,
-        photo: req.file.filename
-      });
-      
-      return res.json(profile);
-    } catch (error) {
-      return res
-        .status(httpStatus.INTERNAL_SERVER_ERROR)
-        .json({ error: error.toString() });
-    }
-  }
-
 
 // Get All profile
 profileController.findAll = async (req, res) => {
   try {
     const user = req.user.userId;
-    let profiles = await profileModel.find({ userId: user }).populate("userId");
+    let profiles = await profileModel.find({ userId: user });
     return res.json(profiles);
   } catch (error) {
     return res
@@ -82,6 +64,30 @@ profileController.findOne = async (req, res) => {
       .json({ error: error.toString() });
   }
 };
+
+  // upload Photo
+  profileController.upload = async (req, res, next) => {
+
+    try {
+      let profile = await profileModel.findByIdAndUpdate(req.params.profileId , {
+        userId: req.user.userId,
+        photo: req.file.filename
+      });
+      if (!profile) {
+        return res
+          .status(httpStatus.BAD_REQUEST)
+          .json({ message: "profile not found" });
+      }
+
+      Object.assign(profile, req.body);
+      return res.json(profile);
+    } catch (error) {
+      return res
+        .status(httpStatus.INTERNAL_SERVER_ERROR)
+        .json({ error: error.toString() });
+    }
+  }
+
 
 // Update profile By ID
 profileController.update = async (req, res) => {
