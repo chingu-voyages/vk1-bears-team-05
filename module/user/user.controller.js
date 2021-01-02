@@ -21,16 +21,25 @@ userController.register = async (req, res, next) => {
     .then((user) => {
       if (user.length >= 1) {
         return res.status(httpStatus.CONFLICT).json({
+          status: { type: "emailExists", code: httpStatus.CONFLICT, },
           message: "Mail exists",
+          data: null,
         });
       } else {
         bcrypt.hash(req.body.password, 10, async (err, hash) => {
-          console.log(hash);
-          if (err) {
-            return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
-              error: err,
+          console.log(`password: ${hash}`);
+          if (req.body.password === "") {
+            return res.status(httpStatus.EXPECTATION_FAILED).json({
+              status: { type: "invalidPassword", code: httpStatus.EXPECTATION_FAILED, },
+              message: "null pass",
+              data: null,
             });
-            
+          }else if (err) {
+            return res.status(httpStatus.EXPECTATION_FAILED).json({
+              status: { type: "invalidPassword", code: httpStatus.EXPECTATION_FAILED, },
+              message: "invalid password",
+              data: null,
+            });
           } else {
             
             const activation = crypto({ length: 16, type: "alphanumeric" });
@@ -108,16 +117,13 @@ userController.register = async (req, res, next) => {
 
                 if (newUser) {
                   return res.status(httpStatus.CREATED).json({
-                    status: { type: "success", code: httpStatus.OK },
+                    status: { type: "registerSuccessful", code: httpStatus.OK },
                     message: "Register successful",
                     data: null,
                   });
                 } else {
                   res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
-                    status: {
-                      type: "error",
-                      code: httpStatus.INTERNAL_SERVER_ERROR,
-                    },
+                    status: { type: "registeFailed", code: httpStatus.INTERNAL_SERVER_ERROR, },
                     message: "Register failed",
                     data: null,
                   });
@@ -138,21 +144,27 @@ userController.login = async (req, res, next) => {
     .then((user) => {
       console.log(user);
       if (user.length < 1) {
-        return res.status(httpStatus.UNAUTHORIZED).json({
-          message: "Auth failed",
+        return res.status(httpStatus.NOT_ACCEPTABLE).json({
+          status: { type: "Invalid", code: httpStatus.NOT_ACCEPTABLE },
+          message: "your not registered",
+          data: null,
         });
       }
 
       if (!user[0].is_active) {
-        return res.status(httpStatus.UNAUTHORIZED).json({
+        return res.status(httpStatus.UPGRADE_REQUIRED).json({
+          status: { type: "notActivated", code: httpStatus.UPGRADE_REQUIRED },
           message: "Not yet activated",
+          data: null
         });
       }
 
       bcrypt.compare(req.body.password, user[0].password, (err, result) => {
         if (err) {
-          return res.status(httpStatus.UNAUTHORIZED).json({
+          return res.status(httpStatus.EXPECTATION_FAILED).json({
+            status: { type: "invalidPassword", code: httpStatus.UNAEXPECTATION_FAILEDUTHORIZED },
             message: "Auth failed",
+            data: null
           });
         }
         if (result) {
@@ -172,13 +184,13 @@ userController.login = async (req, res, next) => {
             }
           );
           return res.status(httpStatus.OK).json({
-            status: { type: "success", code: httpStatus.OK },
+            status: { type: "loginSuccess", code: httpStatus.OK },
             message: "Auth successful",
             data: { token },
           });
         }
         res.status(httpStatus.UNAUTHORIZED).json({
-          status: { type: "error", code: httpStatus.UNAUTHORIZED },
+          status: { type: "loginError", code: httpStatus.UNAUTHORIZED },
           message: "Auth failed",
           data: null,
         });

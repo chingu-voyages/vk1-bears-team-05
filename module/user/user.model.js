@@ -13,11 +13,11 @@ const userSchema = new schema({
   },
   firstName: {
     type: String,
-    required: false
+    required: true
   },
   lastName: {
     type: String,
-    required: false
+    required: true
   },
   mobileNumber: {
     type: String,
