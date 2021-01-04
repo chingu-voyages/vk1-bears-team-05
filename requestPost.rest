@@ -7,21 +7,21 @@
 
 POST http://localhost:8080/api/v1/requestPost
 Content-Type: application/json
-authorization: Bearer #
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImlzdGlhbnJlaWRAZ21haWwuY29tIiwidXNlcklkIjoiNWZmMGMzZWExMzk0NzQzMTI4YWYyMjBiIiwibW9iaWxlTnVtYmVyIjoiMDkyNzU0MTAwMTciLCJmaXJzdE5hbWUiOiJDaHJpc3RvcGhlciIsImxhc3ROYW1lIjoicmVpZCIsImNpdHkiOiJTdHJlZXQgTm9ydGhTaWduYWwgVmlsbGFnZSBUYWd1aWcgQ2l0eSIsInJvbGUiOiJtZW1iZXIiLCJpYXQiOjE2MDk3MzYxODEsImV4cCI6MTYxMDA5NjE4MX0.EFW38itij7iSvds-tY08RDNzr0Ee-lFvO2SeFQuSEd0
 
 
 {
-    "title": "" ,
-    "story": "" , 
-    "photo": "" , 
-    "bloodType": "" , 
+    "title": "test" ,
+    "story": "test" , 
+    "photo": "test" , 
+    "bloodType": "test" , 
     "amount": 4 ,
-    "location": "" , 
+    "location": "test" , 
     "phoneNumber": 123 , 
-    "closingDate": "" , 
-    "hospital": "" ,
+    "closingDate": "01/04/2021" , 
+    "hospital": "test" ,
     "status": true ,
-    "referenceNumber": ""
+    "referenceNumber": "test"
 }
 
 

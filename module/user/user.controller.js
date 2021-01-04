@@ -217,36 +217,35 @@ userController.activate = async (req, res) => {
       (err, doc) => {
         if (err) {
           console.log("Activation Error!");
-          return res
-            .status(httpStatus.BAD_REQUEST)
-            .json({ message: "Activation error" });
-        }
-
-        if (!doc) {
-          return res.status(httpStatus.BAD_REQUEST).json({
-            status: {
-              type: "error",
-              code: httpStatus.BAD_REQUEST,
-            },
-            message: "Activation key not found",
-            data: null,
+          return res.status(httpStatus.BAD_REQUEST).json({ 
+            status: {type: "error", code: httpStatus.BAD_REQUEST,},
+            message: "Activation error" 
           });
         }
 
-        return res.status(httpStatus.OK).json({
-          status: {
-            type: "success",
-            code: httpStatus.OK,
-          },
-          message: "You have successfully activated your account.",
-          data: null,
+        if (!doc) {
+          //pag mali ung activation code
+          return res.status(httpStatus.BAD_REQUEST).json({
+            status: {type: "error", code: httpStatus.BAD_REQUEST,},
+            message: "Activation key not found",
+            data: null,
+          });
+
+        }else {
+          return res.status(httpStatus.OK).json({
+            status: {type: "success", code: httpStatus.OK,},
+            message: "You have successfully activated your account.",
+            data: null,
         });
+        }
       }
     );
   } catch (err) {
     console.log(err);
-    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
-      error: err,
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            status: {type: "error", code: httpStatus.INTERNAL_SERVER_ERROR,},
+            message: "Invalid",
+            data: null,
     });
   }
 };
@@ -255,11 +254,21 @@ userController.activate = async (req, res) => {
 userController.findAll = async (req, res) => {
   try {
     let users = await userModel.find();
-    return res.json(users);
-  } catch (error) {
-    return res
-      .status(httpStatus.INTERNAL_SERVER_ERROR)
-      .json({ error: error.toString() });
+
+    return res.status(httpStatus.OK).json({
+      status: {type: "success", code: httpStatus.OK,},
+      message: "all users",
+      users
+    });
+
+  } catch (err) {
+
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+      status: {type: "error", code: httpStatus.INTERNAL_SERVER_ERROR,},
+      message: "all users",
+      users: null ,
+    });
+
   }
 };
 
@@ -268,15 +277,31 @@ userController.findOne = async (req, res) => {
   try {
     let user = await userModel.findById(req.params.userId);
     if (!user) {
-      return res
-        .status(httpStatus.BAD_REQUEST)
-        .json({ message: "User not found" });
+
+      return res.status(httpStatus.BAD_REQUEST).json({ 
+
+        status: {type: "error", code: httpStatus.BAD_REQUEST},
+        message: "User not found" ,
+        data : null
+
+      });
+    }else {
+
+      return res.status(httpStatus.OK).json({ 
+
+        status: {type: "success", code: httpStatus.OK},
+        message: "User Data" ,
+        data : user
+
+      });
+
     }
-    return res.json(user);
   } catch (error) {
-    return res
-      .status(httpStatus.INTERNAL_SERVER_ERROR)
-      .json({ error: error.toString() });
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ 
+      status: {type: "error", code: httpStatus.INTERNAL_SERVER_ERROR},
+      data : null,
+      error: error.toString() 
+    });
   }
 };
 
@@ -284,16 +309,36 @@ userController.findOne = async (req, res) => {
 userController.update = async (req, res) => {
   try {
     let user = await userModel.findById(req.params.userId);
+
     if (!user) {
-      return res
-        .status(httpStatus.BAD_REQUEST)
-        .json({ message: "User not found" });
+
+      return res.status(httpStatus.BAD_REQUEST).json({ 
+
+        status: {type: "error", code: httpStatus.BAD_REQUEST},
+        message: "User not found" ,
+        data : null
+
+      });
     }
+
     Object.assign(user, req.body);
     await user.save();
-    return res.json(user);
+    return res.status(httpStatus.OK).json({ 
+
+        status: {type: "success", code: httpStatus.OK},
+        message: "User Data" ,
+        data : user
+
+    });
+
   } catch (error) {
-    return res.status(500).json({ error: error.toString() });
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ 
+
+      status: {type: "error", code: httpStatus.INTERNAL_SERVER_ERROR},
+      data : null,
+      error: error.toString() 
+
+    });
   }
 };
 
@@ -302,13 +347,33 @@ userController.delete = async (req, res) => {
   try {
     let user = await userModel.findByIdAndRemove(req.params.userId);
     if (!user) {
-      return res
-        .status(httpStatus.BAD_REQUEST)
-        .json({ message: "User not found" });
+
+      return res.status(httpStatus.BAD_REQUEST).json({ 
+
+        status: {type: "error", code: httpStatus.BAD_REQUEST},
+        message: "User not found" ,
+        data : null
+
+      });
+
+    }else {
+      return res.status(httpStatus.OK).json({ 
+
+        status: {type: "success", code: httpStatus.OK},
+        message: "User deleted successfully!" ,
+
+      });
     }
-    return res.json({ message: "User deleted successfully!" });
   } catch (error) {
-    return res.status(500).json({ error: error.toString() });
+
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ 
+
+      status: {type: "error", code: httpStatus.INTERNAL_SERVER_ERROR},
+      data : null,
+      error: error.toString() 
+
+    });
+    
   }
 };
 

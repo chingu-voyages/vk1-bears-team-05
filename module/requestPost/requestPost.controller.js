@@ -26,52 +26,20 @@ requestPostController.add = async (req, res, next) => {
       status, 
       referenceNumber
     });
-
     await requestPost.save();
-
-    res.json(requestPost);
+    return res.status(httpStatus.OK).json({ 
+      status: {type: "success", code: httpStatus.OK},
+      message: "RequestPost add successfully!" ,
+      data: requestPost
+    });
   } catch (error) {
-    return res
-      .status(httpStatus.INTERNAL_SERVER_ERROR)
-      .json({ error: error.toString() });
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ 
+      status: {type: "error", code: httpStatus.INTERNAL_SERVER_ERROR},
+      data : null,
+      error: error.toString() 
+    });
   }
 };
-
-
-
-
-// Get All requestPost
-requestPostController.findAll = async (req, res) => {
-  try {
-    const user = req.user.userId;
-    let requestPosts = await requestPostModel.find({ userId: user }).populate("user");
-    return res.json(requestPosts);
-  } catch (error) {
-
-    return res
-      .status(httpStatus.INTERNAL_SERVER_ERROR)
-      .json({ error: error.toString() });
-
-  }
-};
-
-// Get requestPost By ID
-requestPostController.findOne = async (req, res) => {
-  try {
-    let requestPost = await requestPostModel.findById(req.params.requestPostId);
-    if (!requestPost) {
-      return res
-        .status(httpStatus.BAD_REQUEST)
-        .json({ message: "requestPost not found" });
-    }
-    return res.json(requestPost);
-  } catch (error) {
-    return res
-      .status(httpStatus.INTERNAL_SERVER_ERROR)
-      .json({ error: error.toString() });
-  }
-};
-
 
 //requestPost upload
 requestPostController.upload = async (req, res, next) => {
@@ -82,50 +50,122 @@ requestPostController.upload = async (req, res, next) => {
       photo: req.file.filename
     });
     if (!requestPost) {
-      return res
-        .status(httpStatus.BAD_REQUEST)
-        .json({ message: "requestPost not found" });
+      return res.status(httpStatus.BAD_REQUEST).json({
+        status: {type: "error", code: httpStatus.BAD_REQUEST},
+        message: "requestPost not found",
+        data: null
+      });
     }
-
     Object.assign(requestPost, req.body);
-    return res.json(requestPost);
+    return res.status(httpStatus.OK).json({ 
+      status: {type: "success", code: httpStatus.OK},
+      message: "successfully Upload Photo" ,
+      data: requestPost
+    });
   } catch (error) {
-    return res
-      .status(httpStatus.INTERNAL_SERVER_ERROR)
-      .json({ error: error.toString() });
-    }
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ 
+      status: {type: "error", code: httpStatus.INTERNAL_SERVER_ERROR},
+      data : null,
+      error: error.toString() 
+    });
+  }
 }
-
 
 // Update requestPost By ID
 requestPostController.update = async (req, res) => {
   try {
     let requestPost = await requestPostModel.findById(req.params.requestPostId);
     if (!requestPost) {
-      return res
-        .status(httpStatus.BAD_REQUEST)
-        .json({ message: "requestPost not found" });
+      return res.status(httpStatus.BAD_REQUEST).json({
+        status: {type: "error", code: httpStatus.BAD_REQUEST},
+        message: "requestPost not found",
+        data: null
+      });
     }
     Object.assign(requestPost, req.body);
     await requestPost.save();
-    return res.json(requestPost);
+    return res.status(httpStatus.OK).json({ 
+      status: {type: "success", code: httpStatus.OK},
+      message: "successfully Update Request" ,
+      data: requestPost
+    });
   } catch (error) {
-    return res.status(500).json({ error: error.toString() });
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ 
+      status: {type: "error", code: httpStatus.INTERNAL_SERVER_ERROR},
+      data : null,
+      error: error.toString() 
+    });
   }
 };
+
+// Get All requestPost
+requestPostController.findAll = async (req, res) => {
+  try {
+    const user = req.user.userId;
+    let requestPosts = await requestPostModel.find({ userId: user }).populate("user");
+    return res.status(httpStatus.OK).json({ 
+      status: {type: "success", code: httpStatus.OK},
+      message: "all Request" ,
+      data: requestPosts
+    });
+  } catch (error) {
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ 
+      status: {type: "error", code: httpStatus.INTERNAL_SERVER_ERROR},
+      data : null,
+      error: error.toString() 
+    });
+  }
+};
+
+// Get requestPost By ID
+requestPostController.findOne = async (req, res) => {
+  try {
+    let requestPost = await requestPostModel.findById(req.params.requestPostId);
+    if (!requestPost) {
+      return res.status(httpStatus.BAD_REQUEST).json({
+
+          status: {type: "error", code: httpStatus.BAD_REQUEST},
+          message: "requestPost not found",
+          data: null
+      });
+    }
+    return res.status(httpStatus.OK).json({ 
+        status: {type: "success", code: httpStatus.OK},
+        message: "You're Request" ,
+        data: requestPost
+      });
+    } catch (error) {
+      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ 
+        status: {type: "error", code: httpStatus.INTERNAL_SERVER_ERROR},
+        data : null,
+        error: error.toString() 
+    });
+   }
+};
+
 
 // Delete requestPost By ID
 requestPostController.delete = async (req, res) => {
   try {
     let requestPost = await requestPostModel.findByIdAndRemove(req.params.requestPostId);
     if (!requestPost) {
-      return res
-        .status(httpStatus.BAD_REQUEST)
-        .json({ message: "requestPost not found" });
+      return res.status(httpStatus.BAD_REQUEST).json({
+        status: {type: "error", code: httpStatus.BAD_REQUEST},
+        message: "requestPost not found",
+        data: null
+      });
     }
-    return res.json({ message: "requestPost Deleted Successfully!" });
+    return res.status(httpStatus.OK).json({ 
+      status: {type: "success", code: httpStatus.OK},
+      message: "requestPost Deleted Successfully!" ,
+      data: requestPost
+    });
   } catch (error) {
-    return res.status(500).json({ error: error.toString() });
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ 
+      status: {type: "error", code: httpStatus.INTERNAL_SERVER_ERROR},
+      data : null,
+      error: error.toString() 
+    });
   }
 };
 

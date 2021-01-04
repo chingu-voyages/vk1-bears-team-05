@@ -12,18 +12,18 @@ Content-Type: application/json
 
 
 {
-    "email": "istainreidjkyjukmhnbju@gmail.com",
-    "firstName": "asdasdasd" ,
-    "lastName": "reid",
-    "city": "taguig" ,
-    "mobileNumber": "09275410017" 
+    "email": "",
+    "password": "",
+    "firstName": "" ,
+    "lastName": "",
+    "city": "" ,
+    "mobileNumber": "" 
 }
-
 
 
 ### Activate account ###
 
-http://localhost:8080/api/v1/auth/activate/DScEd0VBy62DKg5a
+http://localhost:8080/api/v1/auth/activate/8y9Nx3PdeqWY6DGa
 
 
 ### Login admin or user  account ###
@@ -33,7 +33,7 @@ Content-Type: application/json
 
 {
     "email": "istianreid@gmail.com",
-    "password": "code"
+    "password": "codecode"
 }
 
 
@@ -45,7 +45,7 @@ authorization: Bearer #
 
 ### Admin can view their own data ###
 
-http://localhost:8080/api/v1/auth/users/#
+http://localhost:8080/api/v1/auth/users/5ff0c3ea1394743128af220b
 authorization: Bearer #
 
 

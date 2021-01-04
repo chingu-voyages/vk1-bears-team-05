@@ -9,64 +9,8 @@ import multer from 'multer'
 
 const profileController = {};
 
-// Add profile
-profileController.add = async (req, res, next) => {
-  //
-  const { photo, userAbout, bloodType, location, lastTimeDonated } = req.body;
-
-  try {
-    const profile = await profileModel.create({
-      userId: req.user.userId,
-      photo,
-      userAbout,
-      bloodType,
-      location,
-      lastTimeDonated
-    });
-
-    await profile.save();
-
-    res.json(profile);
-  } catch (error) {
-    return res
-      .status(httpStatus.INTERNAL_SERVER_ERROR)
-      .json({ error: error.toString() });
-  }
-};
-
-
-// Get All profile
-profileController.findAll = async (req, res) => {
-  try {
-    const user = req.user.userId;
-    let profiles = await profileModel.find({ userId: user });
-    return res.json(profiles);
-  } catch (error) {
-    return res
-      .status(httpStatus.INTERNAL_SERVER_ERROR)
-      .json({ error: error.toString() });
-  }
-};
-
-// Get profile By ID
-profileController.findOne = async (req, res) => {
-  try {
-    let profile = await profileModel.findById(req.params.profileId);
-    if (!profile) {
-      return res
-        .status(httpStatus.BAD_REQUEST)
-        .json({ message: "profile not found" });
-    }
-    return res.json(profile);
-  } catch (error) {
-    return res
-      .status(httpStatus.INTERNAL_SERVER_ERROR)
-      .json({ error: error.toString() });
-  }
-};
-
-  // upload Photo
-  profileController.upload = async (req, res, next) => {
+// upload Photo
+profileController.upload = async (req, res) => {
 
     try {
       let profile = await profileModel.findByIdAndUpdate(req.params.profileId , {
@@ -74,35 +18,114 @@ profileController.findOne = async (req, res) => {
         photo: req.file.filename
       });
       if (!profile) {
-        return res
-          .status(httpStatus.BAD_REQUEST)
-          .json({ message: "profile not found" });
+
+        return res.status(httpStatus.BAD_REQUEST).json({ 
+
+          status: {type: "error", code: httpStatus.BAD_REQUEST},
+          message: "profile not found" ,
+          data : null
+
+        });
       }
 
       Object.assign(profile, req.body);
-      return res.json(profile);
-    } catch (error) {
-      return res
-        .status(httpStatus.INTERNAL_SERVER_ERROR)
-        .json({ error: error.toString() });
-    }
-  }
+      return res.status(httpStatus.OK).json({ 
 
+        status: {type: "success", code: httpStatus.OK},
+        message: "Profile Upload successfully!" ,
+        data: profile
+  
+      });
+    } catch (error) {
+
+      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ 
+
+        status: {type: "error", code: httpStatus.INTERNAL_SERVER_ERROR},
+        data : null,
+        error: error.toString() 
+  
+      });
+    }
+}
 
 // Update profile By ID
 profileController.update = async (req, res) => {
   try {
     let profile = await profileModel.findById(req.params.profileId);
     if (!profile) {
-      return res
-        .status(httpStatus.BAD_REQUEST)
-        .json({ message: "profile not found" });
+      return res.status(httpStatus.BAD_REQUEST).json({
+      
+        status: {type: "error", code: httpStatus.BAD_REQUEST},
+        message: "profile not found" ,
+        data : null
+
+      });
     }
     Object.assign(profile, req.body);
     await profile.save();
-    return res.json(profile);
+    return res.status(httpStatus.OK).json({ 
+
+      status: {type: "success", code: httpStatus.OK},
+      message: "Profile Update successfully!" ,
+      data: profile
+
+    });
+  }
+  catch (error) {
+
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ 
+
+      status: {type: "error", code: httpStatus.INTERNAL_SERVER_ERROR},
+      data : null,
+      error: error.toString() 
+
+    });
+
+  }
+};
+
+// Get All profile
+profileController.findAll = async (req, res) => {
+  try {
+    const user = req.user.userId;
+    let profiles = await profileModel.find({ userId: user });
+    return res.status(httpStatus.OK).json({ 
+      status: {type: "success", code: httpStatus.OK},
+      message: "successfully get all profile" ,
+      data: profiles
+    });
   } catch (error) {
-    return res.status(500).json({ error: error.toString() });
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ 
+      status: {type: "error", code: httpStatus.INTERNAL_SERVER_ERROR},
+      data : null,
+      error: error.toString() 
+    });
+  }
+};
+
+// Get profile By ID
+profileController.findOne = async (req, res) => {
+
+  try {
+    let profile = await profileModel.findById(req.params.profileId);
+    if (!profile) {
+      return res.status(httpStatus.BAD_REQUEST).json({ 
+        status: {type: "error", code: httpStatus.BAD_REQUEST},
+        message: "profile not found" ,
+        data : null
+      });
+    }
+    return res.status(httpStatus.OK).json({ 
+      status: {type: "success", code: httpStatus.OK},
+      message: "successfully get your profile" ,
+      data: profile
+    });
+  } catch (error) {
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ 
+      status: {type: "error", code: httpStatus.INTERNAL_SERVER_ERROR},
+      data : null,
+      error: error.toString() 
+    });
   }
 };
 
@@ -111,13 +134,31 @@ profileController.delete = async (req, res) => {
   try {
     let profile = await profileModel.findByIdAndRemove(req.params.profileId);
     if (!profile) {
-      return res
-        .status(httpStatus.BAD_REQUEST)
-        .json({ message: "profile not found" });
+
+      return res.status(httpStatus.BAD_REQUEST).json({ 
+
+          status: {type: "error", code: httpStatus.BAD_REQUEST},
+          message: "profile not found" ,
+          data : null
+
+        });
     }
-    return res.json({ message: "profile Deleted Successfully!" });
+    return res.status(httpStatus.OK).json({ 
+
+      status: {type: "success", code: httpStatus.OK},
+      message: "profile Deleted Successfully!" ,
+      data: profile
+
+    });
   } catch (error) {
-    return res.status(500).json({ error: error.toString() });
+    
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ 
+
+      status: {type: "error", code: httpStatus.INTERNAL_SERVER_ERROR},
+      data : null,
+      error: error.toString() 
+
+    });
   }
 };
 
