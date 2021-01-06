@@ -23,7 +23,7 @@ requestPostController.add = async (req, res, next) => {
       phoneNumber, 
       closingDate, 
       hospital, 
-      status, 
+      status,
       referenceNumber
     });
     await requestPost.save();

@@ -60,7 +60,7 @@ userController.register = async (req, res, next) => {
             const filePath = path.join(__dirname, "activationemail.html");
             var content = await fs.readFileSync(filePath, "utf-8");
             var view = {
-              url: `https://localhost:3000/activate/${activation}`,
+              url: `http://localhost:3000/activate/${activation}`,
               name: {
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
@@ -99,6 +99,7 @@ userController.register = async (req, res, next) => {
                   mobileNumber: req.body.mobileNumber,
                   role: req.body.role,
                   activation_key: activation,
+                  profileId:""
                 });
 
                 const profile = await profileModel.create({
@@ -110,6 +111,14 @@ userController.register = async (req, res, next) => {
                   lastTimeDonated: ""
                 });
 
+                console.log(newUser._id)
+                console.log(profile._id)
+
+                const user = await userModel.findByIdAndUpdate(newUser._id,{
+                  userId: newUser._id,
+                  profileId: profile._id
+                })
+                Object.assign(user, req.body)
 
                 await profile.save();
 
@@ -177,6 +186,7 @@ userController.login = async (req, res, next) => {
               lastName: user[0].lastName,
               city: user[0].city,
               role: user[0].role,
+              profileId: user[0].profileId
             },
               appConfig.jwt_key,
             {

@@ -17,10 +17,10 @@ var requestPostSchema = new schema({
   },
   bloodType: {
     type: String,
-    required: true
+    required: false
   },
   amount: {
-    type: Number,
+    type: String,
     required: true
   },
   location: {
@@ -41,11 +41,13 @@ var requestPostSchema = new schema({
   },
   status: {
     type: Boolean,
-    required: true
+    required: true ,
+    default : "true"
   },
   referenceNumber: {
     type: String,
-    required: true
+    required: false ,
+    default : "123456789"
   },
   userId: {
     type: schema.Types.ObjectId,

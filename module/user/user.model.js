@@ -40,6 +40,10 @@ const userSchema = new schema({
     type: Boolean,
     default: false
   },
+  profileId: {
+    type: String,
+    required: false
+  }
 });
 
 const userModel = mongoose.model("user", userSchema);

@@ -13,7 +13,8 @@ const profileController = {};
 profileController.upload = async (req, res) => {
 
     try {
-      let profile = await profileModel.findByIdAndUpdate(req.params.profileId , {
+      
+      let profile = await profileModel.findByIdAndUpdate(req.params.profileId,{
         userId: req.user.userId,
         photo: req.file.filename
       });
@@ -36,6 +37,7 @@ profileController.upload = async (req, res) => {
         data: profile
   
       });
+
     } catch (error) {
 
       return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ 
