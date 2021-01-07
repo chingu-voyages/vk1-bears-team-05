@@ -76,13 +76,18 @@ const upload = multer({
   }
 })
 
-requestPostRoutes.post(
-  "/upload/:requestPostId",
-  [authenticateToken],
-  upload.single('image'),
-  asyncWrapper(requestPostController.upload)
-);
 
+// requestPostRoutes.post(
+//   "/uploadPost",
+//   [authenticateToken],
+//   upload.single('image'),
+//   asyncWrapper(requestPostController.add)
+// );
 
+requestPostRoutes.post('/uploadPost',
+  [authenticateToken], 
+  upload.single('image'), (req, res) => {
+  res.send(`/${req.file.filename}`)
+})
 
 export { requestPostRoutes };

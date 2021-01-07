@@ -45,6 +45,7 @@ userController.register = async (req, res, next) => {
             const activation = crypto({ length: 16, type: "alphanumeric" });
 
             const transporter = nodemailer.createTransport({
+
               service: "gmail",
               auth: {
                 user: "istianreid@gmail.com",
@@ -54,7 +55,9 @@ userController.register = async (req, res, next) => {
               tls: {
                 rejectUnauthorized: false,
               },
+              
             });
+
             console.log("test")
 
             const filePath = path.join(__dirname, "activationemail.html");
@@ -99,7 +102,8 @@ userController.register = async (req, res, next) => {
                   mobileNumber: req.body.mobileNumber,
                   role: req.body.role,
                   activation_key: activation,
-                  profileId:""
+                  profileId:"",
+                  requestPostId:""
                 });
 
                 const profile = await profileModel.create({

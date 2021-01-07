@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { requestPostModel } from "./requestPost.model";
+import {userModel} from "../user/user.model"
 import httpStatus from "../../utils/httpStatus";
 import appConfig from "../../config/env";
 
@@ -12,6 +13,9 @@ requestPostController.add = async (req, res, next) => {
   const {title, story, photo, bloodType, amount, location, phoneNumber, closingDate, hospital, status, referenceNumber} = req.body;
 
   try {
+
+    console.log(req.file)
+
     const requestPost = await requestPostModel.create({
       userId: req.user.userId,
       title, 
@@ -26,12 +30,27 @@ requestPostController.add = async (req, res, next) => {
       status,
       referenceNumber
     });
+    
+    // requestPost = await requestPostModel.findByIdAndUpdate(requestPost._id,{
+    //   userId: req.user.userId,
+    //   photo: req.file.name
+    // });
+    // Object.assign(requestPost, req.body)
+
+    const user = await userModel.findByIdAndUpdate(req.user.userId,{
+      userId: req.user.userId,
+      requestPostId: requestPost._id
+    })
+
+    Object.assign(user, req.body)
+
     await requestPost.save();
     return res.status(httpStatus.OK).json({ 
       status: {type: "success", code: httpStatus.OK},
       message: "RequestPost add successfully!" ,
       data: requestPost
     });
+
   } catch (error) {
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ 
       status: {type: "error", code: httpStatus.INTERNAL_SERVER_ERROR},
@@ -42,34 +61,34 @@ requestPostController.add = async (req, res, next) => {
 };
 
 //requestPost upload
-requestPostController.upload = async (req, res, next) => {
+// requestPostController.upload = async (req, res, next) => {
 
-  try {
-    let requestPost = await requestPostModel.findByIdAndUpdate(req.params.requestPostId , {
-      userId: req.user.userId,
-      photo: req.file.filename
-    });
-    if (!requestPost) {
-      return res.status(httpStatus.BAD_REQUEST).json({
-        status: {type: "error", code: httpStatus.BAD_REQUEST},
-        message: "requestPost not found",
-        data: null
-      });
-    }
-    Object.assign(requestPost, req.body);
-    return res.status(httpStatus.OK).json({ 
-      status: {type: "success", code: httpStatus.OK},
-      message: "successfully Upload Photo" ,
-      data: requestPost
-    });
-  } catch (error) {
-    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ 
-      status: {type: "error", code: httpStatus.INTERNAL_SERVER_ERROR},
-      data : null,
-      error: error.toString() 
-    });
-  }
-}
+//   try {
+//     let requestPost = await requestPostModel.findByIdAndUpdate(req.params.requestPostId , {
+//       userId: req.user.userId,
+//       photo: req.file.filename
+//     });
+//     if (!requestPost) {
+//       return res.status(httpStatus.BAD_REQUEST).json({
+//         status: {type: "error", code: httpStatus.BAD_REQUEST},
+//         message: "requestPost not found",
+//         data: null
+//       });
+//     }
+//     Object.assign(requestPost, req.body);
+//     return res.status(httpStatus.OK).json({ 
+//       status: {type: "success", code: httpStatus.OK},
+//       message: "successfully Upload Photo" ,
+//       data: requestPost
+//     });
+//   } catch (error) {
+//     return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ 
+//       status: {type: "error", code: httpStatus.INTERNAL_SERVER_ERROR},
+//       data : null,
+//       error: error.toString() 
+//     });
+//   }
+// }
 
 // Update requestPost By ID
 requestPostController.update = async (req, res) => {

@@ -13,11 +13,11 @@ var requestPostSchema = new schema({
   },
   photo: {
     type: String,
-    required: false
+    required: true
   },
   bloodType: {
     type: String,
-    required: false
+    required: true
   },
   amount: {
     type: String,
@@ -41,7 +41,7 @@ var requestPostSchema = new schema({
   },
   status: {
     type: Boolean,
-    required: true ,
+    required: false ,
     default : "true"
   },
   referenceNumber: {

@@ -43,6 +43,10 @@ const userSchema = new schema({
   profileId: {
     type: String,
     required: false
+  },
+  requestPostId: {
+    type: String,
+    required: false
   }
 });
 
