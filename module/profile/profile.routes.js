@@ -84,4 +84,10 @@ profileRoutes.post(
   asyncWrapper(profileController.upload)
 );
 
+// profileRoutes.post('/uploadPost',
+//   [authenticateToken], 
+//   upload.single('image'), (req, res) => {
+//   res.send(`/${req.file.filename}`)
+// })
+
 export { profileRoutes };

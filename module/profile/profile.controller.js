@@ -13,10 +13,11 @@ const profileController = {};
 profileController.upload = async (req, res) => {
 
     try {
+      console.log(req.file)
       
       let profile = await profileModel.findByIdAndUpdate(req.params.profileId,{
         userId: req.user.userId,
-        photo: req.file.filename
+        photo: req.file.path
       });
       if (!profile) {
 
@@ -52,6 +53,10 @@ profileController.upload = async (req, res) => {
 
 // Update profile By ID
 profileController.update = async (req, res) => {
+
+  console.log(req)
+
+
   try {
     let profile = await profileModel.findById(req.params.profileId);
     if (!profile) {
@@ -76,17 +81,16 @@ profileController.update = async (req, res) => {
   catch (error) {
 
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ 
-
       status: {type: "error", code: httpStatus.INTERNAL_SERVER_ERROR},
       data : null,
       error: error.toString() 
-
     });
 
   }
 };
 
 // Get All profile
+
 profileController.findAll = async (req, res) => {
   try {
     const user = req.user.userId;

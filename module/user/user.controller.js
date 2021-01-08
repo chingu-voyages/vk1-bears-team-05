@@ -63,12 +63,13 @@ userController.register = async (req, res, next) => {
             const filePath = path.join(__dirname, "activationemail.html");
             var content = await fs.readFileSync(filePath, "utf-8");
             var view = {
-              url: `http://localhost:3000/activate/${activation}`,
+              url: `https://bloodmatch-1d6cb67ne.vercel.app/${activation}`,
               name: {
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
               },
             };
+            console.log(view)
             var activationEmail = mustache.render(content, view);
 
             // email activation to user
